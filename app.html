@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html ng-app="demo">
+
+<head>
+    <title>Tiles</title>
+    <script src="angular.js"></script>
+    <link href="bootstrap.css" rel="stylesheet" />
+    <link href="bootstrap-theme.css" rel="stylesheet" />
+    <script src="controllers/app.js"></script>
+    <script src="angular-drag-and-drop-lists.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="app.css" />
+</head>
+
+<body ng-controller="AdvancedDemoController">
+    <div class="advancedDemo row">
+        <div ng-repeat="containers in model" class="col-md-4">
+            <div class="dropzone box box-yellow">
+                <h3>Dropzone {{$index + 1}}</h3>
+                <ul dnd-list="containers" dnd-allowed-types="['containerType']" dnd-external-sources="true" dnd-dragover="dragoverCallback(event, index, external, type)" dnd-drop="dropCallback(event, index, item, external, type, 'containerType')">
+                    <li ng-repeat="items in containers" dnd-draggable="items" dnd-type="'containerType'" dnd-effect-allowed="copyMove" dnd-dragstart="logEvent('Started to drag a container', event)" dnd-moved="containers.splice($index, 1); logEvent('Container moved', event)" dnd-copied="logEvent('Container copied', event)">
+                        <div class="container-element box box-blue">
+                            <h3>Container</h3>
+                            <ul dnd-list="items" dnd-allowed-types="['itemType']" dnd-horizontal-list="true" dnd-external-sources="true" dnd-dragover="dragoverCallback(event, index, external, type)" dnd-drop="dropCallback(event, index, item, external, type, 'itemType')" class="itemlist">
+                                <li ng-repeat="item in items" dnd-draggable="item" dnd-type="'itemType'" dnd-effect-allowed="copyMove" dnd-dragstart="logEvent('Started to drag an item', event)" dnd-moved="items.splice($index, 1); logEvent('Item moved', event)" dnd-copied="logEvent('Item copied', event)">
+                                    {{item.label}}
+                                </li>
+                            </ul>
+                            <div class="clearfix"></div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
